@@ -1,4 +1,6 @@
 resource "datadog_service_level_objective" "customer_availability" {
+  count = var.enable_slos ? 1 : 0
+
   name        = "${local.app_name} - customer availability"
   type        = "monitor"
   description = "Customer-visible app availability from health and landing page synthetic checks."
@@ -23,7 +25,7 @@ resource "datadog_service_level_objective" "customer_availability" {
 }
 
 resource "datadog_service_level_objective" "report_generation_quality" {
-  count = var.enable_log_monitors ? 1 : 0
+  count = var.enable_slos && var.enable_log_monitors ? 1 : 0
 
   name        = "${local.app_name} - report generation quality"
   type        = "monitor"
@@ -50,7 +52,7 @@ resource "datadog_service_level_objective" "report_generation_quality" {
 }
 
 resource "datadog_service_level_objective" "official_dependency_health" {
-  count = var.enable_log_monitors ? 1 : 0
+  count = var.enable_slos && var.enable_log_monitors ? 1 : 0
 
   name        = "${local.app_name} - official portal dependency health"
   type        = "monitor"

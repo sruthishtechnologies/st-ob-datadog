@@ -31,13 +31,15 @@ Add these secrets in `sruthishtechnologies/st-ob-datadog`:
 | `AWS_REGION` | `ap-south-1` | Terraform state region. |
 | `DATADOG_API_URL` | `https://api.datadoghq.com` | Datadog site API endpoint. |
 | `DATADOG_NOTIFICATION_HANDLES` | empty | Alert target, for example `@slack-ops` or `@someone@example.com`. |
+| `ENABLE_DASHBOARD` | `false` | Set to `true` after baseline synthetic tests apply successfully. |
+| `ENABLE_SLOS` | `false` | Set to `true` after baseline synthetic tests apply successfully. |
 | `ENABLE_APM_MONITORS` | `false` | Set to `true` after Datadog APM traces are enabled for the app. |
 | `ENABLE_LOG_MONITORS` | `false` | Set to `true` after Datadog Logs/Log Management is enabled for the org. |
 | `ENVIRONMENT` | `prod` | Datadog `env` tag. |
 | `SERVICE_NAME` | `ssvd-report-store` | Datadog service tag used by APM/log monitors. |
 | `TEAM` | `srisatvam` | Owner tag. |
 
-By default this repo creates synthetics, an availability SLO, and the overview dashboard. Log/APM monitors are opt-in because some Datadog organizations do not have Logs/APM enabled yet.
+By default this repo creates only baseline synthetics. SLOs, dashboards, log monitors, and APM monitors are opt-in because some Datadog organizations do not have those products enabled yet.
 
 ## Deploy Flow
 

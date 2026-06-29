@@ -28,7 +28,7 @@ SriSatVam Report Store is a land-report workflow app. It has three reliability r
 | Report generation quality | 98.0% over 7 days, 97.0% over 30 days | Report generation depends on external portals, so the target is realistic but strict. |
 | Official portal dependency health | 95.0% over 7 and 30 days | Tracks external portal instability separately so we can communicate clearly to users. |
 
-The report-generation and official-dependency SLOs are created only when `ENABLE_LOG_MONITORS=true`, because they depend on Datadog Logs.
+SLOs are created only when `ENABLE_SLOS=true`. The report-generation and official-dependency SLOs also require `ENABLE_LOG_MONITORS=true`, because they depend on Datadog Logs.
 
 ## Dashboards
 

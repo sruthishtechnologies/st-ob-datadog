@@ -1,4 +1,6 @@
 resource "datadog_dashboard_json" "overview" {
+  count = var.enable_dashboard ? 1 : 0
+
   dashboard = jsonencode({
     title       = "${local.app_name} - Observability Overview"
     description = "Availability, report generation, official portal dependencies, PDF/download health, and storage health."
@@ -27,7 +29,7 @@ resource "datadog_dashboard_json" "overview" {
         definition = {
           type      = "slo"
           title     = "Customer availability SLO"
-          slo_id    = datadog_service_level_objective.customer_availability.id
+          slo_id    = datadog_service_level_objective.customer_availability[0].id
           view_type = "detail"
         }
       },

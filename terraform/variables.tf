@@ -87,3 +87,15 @@ variable "enable_log_monitors" {
   type        = bool
   default     = false
 }
+
+variable "enable_slos" {
+  description = "Create Datadog SLOs after the baseline synthetic tests are stable."
+  type        = bool
+  default     = false
+}
+
+variable "enable_dashboard" {
+  description = "Create the overview dashboard after baseline monitors/SLOs are stable."
+  type        = bool
+  default     = false
+}

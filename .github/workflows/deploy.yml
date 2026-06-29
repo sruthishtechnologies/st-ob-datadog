@@ -36,6 +36,8 @@ jobs:
       TF_VAR_notification_handles: ${{ vars.DATADOG_NOTIFICATION_HANDLES || '' }}
       TF_VAR_enable_apm_monitors: ${{ vars.ENABLE_APM_MONITORS || 'false' }}
       TF_VAR_enable_log_monitors: ${{ vars.ENABLE_LOG_MONITORS || 'false' }}
+      TF_VAR_enable_slos: ${{ vars.ENABLE_SLOS || 'false' }}
+      TF_VAR_enable_dashboard: ${{ vars.ENABLE_DASHBOARD || 'false' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
