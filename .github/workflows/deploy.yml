@@ -38,10 +38,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Preflight required secrets
+        env:
+          AWS_ROLE_ARN: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE_ARN }}
+          TF_STATE_BUCKET: ${{ secrets.TF_STATE_BUCKET }}
+          TF_STATE_LOCK_TABLE: ${{ secrets.TF_STATE_LOCK_TABLE }}
+          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+          DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
+        run: |
+          missing=0
+          for name in AWS_ROLE_ARN TF_STATE_BUCKET TF_STATE_LOCK_TABLE DATADOG_API_KEY DATADOG_APP_KEY; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is empty. Check the matching GitHub repository secret."
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+          case "$AWS_ROLE_ARN" in
+            arn:aws:iam::*:role/*) echo "AWS role ARN secret is present." ;;
+            *)
+              echo "::error::AWS_GITHUB_ACTIONS_ROLE_ARN must be an IAM role ARN like arn:aws:iam::<account-id>:role/<role-name>."
+              exit 1
+              ;;
+          esac
+
       - name: Configure AWS credentials for Terraform state
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE_ARN }}
+          role-session-name: st-ob-datadog-terraform
           aws-region: ${{ vars.AWS_REGION || 'ap-south-1' }}
 
       - name: Setup Terraform
