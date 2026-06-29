@@ -34,6 +34,8 @@ jobs:
       TF_VAR_team: ${{ vars.TEAM || 'srisatvam' }}
       TF_VAR_app_url: ${{ vars.APP_URL || 'http://65.0.49.217' }}
       TF_VAR_notification_handles: ${{ vars.DATADOG_NOTIFICATION_HANDLES || '' }}
+      TF_VAR_enable_apm_monitors: ${{ vars.ENABLE_APM_MONITORS || 'false' }}
+      TF_VAR_enable_log_monitors: ${{ vars.ENABLE_LOG_MONITORS || 'false' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

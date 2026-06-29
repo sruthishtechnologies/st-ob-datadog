@@ -1,4 +1,6 @@
 resource "datadog_monitor" "api_5xx_rate" {
+  count = var.enable_apm_monitors ? 1 : 0
+
   name    = "${local.app_name} - API 5xx rate is high"
   type    = "trace-analytics alert"
   message = local.monitor_message
@@ -17,6 +19,8 @@ resource "datadog_monitor" "api_5xx_rate" {
 }
 
 resource "datadog_monitor" "api_latency_p95" {
+  count = var.enable_apm_monitors ? 1 : 0
+
   name    = "${local.app_name} - API p95 latency is high"
   type    = "query alert"
   message = local.monitor_message
@@ -35,6 +39,8 @@ resource "datadog_monitor" "api_latency_p95" {
 }
 
 resource "datadog_monitor" "report_workflow_errors" {
+  count = var.enable_log_monitors ? 1 : 0
+
   name    = "${local.app_name} - report workflow errors"
   type    = "log alert"
   message = local.monitor_message
@@ -53,6 +59,8 @@ resource "datadog_monitor" "report_workflow_errors" {
 }
 
 resource "datadog_monitor" "official_portal_down" {
+  count = var.enable_log_monitors ? 1 : 0
+
   name    = "${local.app_name} - official portal dependency failures"
   type    = "log alert"
   message = local.monitor_message
@@ -71,6 +79,8 @@ resource "datadog_monitor" "official_portal_down" {
 }
 
 resource "datadog_monitor" "pdf_render_failures" {
+  count = var.enable_log_monitors ? 1 : 0
+
   name    = "${local.app_name} - PDF render/download failures"
   type    = "log alert"
   message = local.monitor_message
@@ -89,6 +99,8 @@ resource "datadog_monitor" "pdf_render_failures" {
 }
 
 resource "datadog_monitor" "auth_registration_errors" {
+  count = var.enable_log_monitors ? 1 : 0
+
   name    = "${local.app_name} - auth/admin error spike"
   type    = "log alert"
   message = local.monitor_message
@@ -107,6 +119,8 @@ resource "datadog_monitor" "auth_registration_errors" {
 }
 
 resource "datadog_monitor" "saved_report_storage_errors" {
+  count = var.enable_log_monitors ? 1 : 0
+
   name    = "${local.app_name} - saved report storage failures"
   type    = "log alert"
   message = local.monitor_message

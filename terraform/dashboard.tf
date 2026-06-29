@@ -20,7 +20,7 @@ resource "datadog_dashboard_json" "overview" {
       {
         definition = {
           type    = "note"
-          content = "## SriSatVam report store\nWatch customer availability first, then report workflow quality, official portal dependencies, PDF/downloads, and storage. SLO/error budget widgets below point to the most important user journeys."
+          content = "## SriSatVam report store\nCurrent baseline monitors customer availability with synthetics and SLOs. Enable APM/log monitors after Datadog APM and Logs are configured for the app service."
         }
       },
       {
@@ -29,67 +29,6 @@ resource "datadog_dashboard_json" "overview" {
           title     = "Customer availability SLO"
           slo_id    = datadog_service_level_objective.customer_availability.id
           view_type = "detail"
-        }
-      },
-      {
-        definition = {
-          type      = "slo"
-          title     = "Report generation quality SLO"
-          slo_id    = datadog_service_level_objective.report_generation_quality.id
-          view_type = "detail"
-        }
-      },
-      {
-        definition = {
-          type      = "slo"
-          title     = "Official portal dependency SLO"
-          slo_id    = datadog_service_level_objective.official_dependency_health.id
-          view_type = "detail"
-        }
-      },
-      {
-        definition = {
-          type  = "timeseries"
-          title = "API request volume"
-          requests = [
-            {
-              q            = "sum:trace.http.request.hits{service:$service,env:$env}.as_count()"
-              display_type = "bars"
-            }
-          ]
-        }
-      },
-      {
-        definition = {
-          type  = "timeseries"
-          title = "API p95 latency"
-          requests = [
-            {
-              q            = "p95:trace.http.request.duration{service:$service,env:$env}"
-              display_type = "line"
-            }
-          ]
-        }
-      },
-      {
-        definition = {
-          type  = "query_value"
-          title = "API 5xx errors"
-          requests = [
-            {
-              q          = "sum:trace.http.request.errors{service:$service,env:$env}.as_count()"
-              aggregator = "sum"
-            }
-          ]
-          precision = 0
-        }
-      },
-      {
-        definition = {
-          type    = "log_stream"
-          title   = "Recent report workflow errors"
-          query   = "service:$service env:$env (error OR failed OR timeout)"
-          columns = ["status", "service", "message"]
         }
       },
       {

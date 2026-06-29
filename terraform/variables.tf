@@ -75,3 +75,15 @@ variable "alert_priority_medium" {
   type        = number
   default     = 3
 }
+
+variable "enable_apm_monitors" {
+  description = "Create APM/trace monitors. Enable after Datadog APM is configured for the app service."
+  type        = bool
+  default     = false
+}
+
+variable "enable_log_monitors" {
+  description = "Create log monitors. Enable only after Datadog Logs/Log Management is enabled for the organization."
+  type        = bool
+  default     = false
+}

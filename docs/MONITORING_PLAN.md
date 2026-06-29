@@ -28,14 +28,16 @@ SriSatVam Report Store is a land-report workflow app. It has three reliability r
 | Report generation quality | 98.0% over 7 days, 97.0% over 30 days | Report generation depends on external portals, so the target is realistic but strict. |
 | Official portal dependency health | 95.0% over 7 and 30 days | Tracks external portal instability separately so we can communicate clearly to users. |
 
+The report-generation and official-dependency SLOs are created only when `ENABLE_LOG_MONITORS=true`, because they depend on Datadog Logs.
+
 ## Dashboards
 
 The overview dashboard is designed for first response:
 
 - SLO/error budget widgets first, so owners know customer impact immediately.
-- Request volume and p95 latency, so traffic spikes and slowdowns are visible.
-- API 5xx query value, so backend failures are obvious.
-- Log stream for recent report workflow failures.
+- Request volume and p95 latency when APM monitors are enabled.
+- API 5xx query value when APM monitors are enabled.
+- Log stream for recent report workflow failures when Logs are enabled.
 - Monitor status board for active alerts.
 
 ## Alerts

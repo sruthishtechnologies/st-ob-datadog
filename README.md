@@ -5,7 +5,8 @@ Terraform automation for monitoring `ssvd-report-store` in Datadog.
 This repo manages:
 
 - API and landing-page synthetics.
-- Monitors for API errors, latency, report generation failures, official portal failures, PDF/download failures, auth/admin errors, and AWS storage failures.
+- Baseline synthetics, availability SLOs, and dashboards.
+- Optional monitors for API errors, latency, report generation failures, official portal failures, PDF/download failures, auth/admin errors, and AWS storage failures after APM/Logs are enabled.
 - SLOs and error budgets for customer availability, report generation quality, and official portal dependency health.
 - An overview dashboard for operators and product owners.
 - GitHub Actions for PR validation and main-branch deployment.
@@ -30,9 +31,13 @@ Add these secrets in `sruthishtechnologies/st-ob-datadog`:
 | `AWS_REGION` | `ap-south-1` | Terraform state region. |
 | `DATADOG_API_URL` | `https://api.datadoghq.com` | Datadog site API endpoint. |
 | `DATADOG_NOTIFICATION_HANDLES` | empty | Alert target, for example `@slack-ops` or `@someone@example.com`. |
+| `ENABLE_APM_MONITORS` | `false` | Set to `true` after Datadog APM traces are enabled for the app. |
+| `ENABLE_LOG_MONITORS` | `false` | Set to `true` after Datadog Logs/Log Management is enabled for the org. |
 | `ENVIRONMENT` | `prod` | Datadog `env` tag. |
 | `SERVICE_NAME` | `ssvd-report-store` | Datadog service tag used by APM/log monitors. |
 | `TEAM` | `srisatvam` | Owner tag. |
+
+By default this repo creates synthetics, an availability SLO, and the overview dashboard. Log/APM monitors are opt-in because some Datadog organizations do not have Logs/APM enabled yet.
 
 ## Deploy Flow
 
